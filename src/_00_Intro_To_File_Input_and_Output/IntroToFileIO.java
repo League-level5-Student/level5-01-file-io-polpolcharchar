@@ -54,7 +54,7 @@ public class IntroToFileIO {
 			      (e.g. FileWriter fw = new FileWriter("src/_00_Intro_To_File_Input_and_Output/test2.txt", true);)
 			*/
 			
-			fw.write("\nThis is me writing a message");
+			fw.write("\nThis is me writing a message11111555");
 				
 			fw.close();
 		} catch (IOException e) {
