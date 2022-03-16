@@ -70,3 +70,4 @@ public class IntroToFileIO {
 		}
 	}
 }
+//Property of Jack Fitterer\

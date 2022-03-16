@@ -35,7 +35,12 @@ public class FileEncryptor {
 			String outputMessage = "";
 			
 			for(int i = 0; i < inputMessage.length(); i++) {
-				outputMessage += letters.charAt((letters.indexOf((inputMessage.charAt(i) + "").toLowerCase()) + key) % 26);
+				if(inputMessage.charAt(i) == ' ') {
+					outputMessage += " ";
+				}else {
+					outputMessage += letters.charAt((letters.indexOf((inputMessage.charAt(i) + "").toLowerCase()) + key) % 26);
+			
+				}
 			}
 			
 			
@@ -48,3 +53,4 @@ public class FileEncryptor {
 		}
 	}
 }
+//Property of Jack Fitterer\
