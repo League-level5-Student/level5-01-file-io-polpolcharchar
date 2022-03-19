@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 
 import javax.swing.JPanel;
@@ -36,7 +37,6 @@ public class GridPanel extends JPanel{
         this.cols = Integer.parseInt(f.readLine());
 //        System.out.println(f.readLine());
 //        System.out.println(f.readLine());
-        f.close();
         
         
         this.pixelWidth = windowWidth / cols;
@@ -57,18 +57,87 @@ public class GridPanel extends JPanel{
         		pixels[i][j] = new Pixel(i, j);
         	}
         }
+        
+        String nextLine = f.readLine();
+        while(nextLine != null) {
+        	int x = Integer.parseInt(nextLine.substring(0, nextLine.indexOf("!")));
+        	int y = Integer.parseInt(nextLine.substring(nextLine.indexOf("!") + 1, nextLine.indexOf("@")));
+        	int red = Integer.parseInt(nextLine.substring(nextLine.indexOf("@") + 1, nextLine.indexOf("#")));
+        	int blue = Integer.parseInt(nextLine.substring(nextLine.indexOf("#") + 1, nextLine.indexOf("$")));
+        	int green = Integer.parseInt(nextLine.substring(nextLine.indexOf("$") + 1));
+        	pixels[x][y].color = new Color(red, green, blue);
+        	
+        	nextLine = f.readLine();
+        }
+        
+        
+        
+        
+        f.close();
 
     }
 
     public void setColor(Color c) {
         color = c;
     }
+    
+    public void save() {
+    	System.out.println("Saving:");
+    	String saveValue = "500\n500\n10\n10\n";
+    	for(int i = 0; i < pixels.length; i++) {
+    		for(int j = 0; j < pixels[i].length; j++) {
+    			saveValue += pixels[i][j].x + "!" + pixels[i][j].y + "@" + pixels[i][j].color.getRed() + "#" + pixels[i][j].color.getBlue() + "$" + pixels[i][j].color.getGreen() + "\n";
+    		}
+    	}
+    	System.out.println(saveValue);
+		try {
+			FileWriter f = new FileWriter("C:\\Users\\HomePC\\git\\level5-01-file-io-polpolcharchar\\src\\_06_Pixel_Art_Save_State\\artSave.txt");
+			f.write(saveValue);
+			
+			f.close();
+		
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
+    public void reset() {
+    	for(int i = 0; i < pixels.length; i++) {
+    		for(int j = 0; j < pixels[i].length; j++) {
+    			pixels[i][j].color = new Color(255, 255, 255);
+    		}
+    	}
+    }
 
     public void clickPixel(int mouseX, int mouseY) {
         // 5. Use the mouseX and mouseY variables to change the color
         //    of the pixel that was clicked. *HINT* Use the pixel's dimensions.
     	pixels[mouseX / pixelWidth][mouseY / pixelHeight].color = color;
-    	System.out.println(mouseX / pixelWidth);
+    	//System.out.println(mouseX / pixelWidth);
+//    	try {
+//    		BufferedReader r = new BufferedReader(new FileReader("C:\\Users\\HomePC\\git\\level5-01-file-io-polpolcharchar\\src\\_06_Pixel_Art_Save_State\\artSave.txt"));
+//			
+//			String contents = "";
+//			String nextLine = r.readLine();
+//			System.out.println("nextLine: " + nextLine);
+//			while(nextLine != null) {
+//				contents += nextLine + "\n";
+//				nextLine = r.readLine();
+//				System.out.println("nextLine: " + nextLine);
+//			}
+//			FileWriter f = new FileWriter("C:\\Users\\HomePC\\git\\level5-01-file-io-polpolcharchar\\src\\_06_Pixel_Art_Save_State\\artSave.txt");
+//
+//			f.write(contents + (mouseX / pixelWidth) + "!" + (mouseY/pixelHeight) + "@" + color.getRed() + "#" + color.getBlue() + "$" + color.getGreen());
+//			
+//			f.close();
+//			r.close();
+//    	
+//    	
+//    	
+//    	} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
     	
     }
 

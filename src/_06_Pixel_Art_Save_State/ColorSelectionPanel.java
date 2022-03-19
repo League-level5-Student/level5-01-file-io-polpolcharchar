@@ -1,20 +1,21 @@
 package _06_Pixel_Art_Save_State;
 
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
-import java.util.Hashtable;
 
 import javax.swing.ImageIcon;
-import javax.swing.JFrame;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-public class ColorSelectionPanel extends JPanel implements MouseListener, ChangeListener{
+public class ColorSelectionPanel extends JPanel implements MouseListener, ChangeListener, ActionListener{
     private static final long serialVersionUID = 1L;
 
     public static final int MAX_COLOR = 256;
@@ -22,6 +23,10 @@ public class ColorSelectionPanel extends JPanel implements MouseListener, Change
     private JSlider rSlider;
     private JSlider gSlider;
     private JSlider bSlider;
+    private JButton saveButton;
+    private JButton resetButton;
+    public boolean reset = false;
+    public boolean save = false;
 
     private Color color;
 
@@ -36,6 +41,10 @@ public class ColorSelectionPanel extends JPanel implements MouseListener, Change
         rSlider = new JSlider(JSlider.VERTICAL);
         gSlider = new JSlider(JSlider.VERTICAL);
         bSlider = new JSlider(JSlider.VERTICAL);
+        saveButton = new JButton("Save");
+        saveButton.addActionListener(this);
+        resetButton = new JButton("Reset");
+        resetButton.addActionListener(this);
 
         rSlider.setMinimum(0);
         rSlider.setMaximum(MAX_COLOR - 1);
@@ -71,6 +80,9 @@ public class ColorSelectionPanel extends JPanel implements MouseListener, Change
         add(gSlider);
         add(new JLabel("blue"));
         add(bSlider);
+        
+        add(saveButton);
+        add(resetButton);
     }
 
     public Color getSelectedColor() {
@@ -125,4 +137,14 @@ public class ColorSelectionPanel extends JPanel implements MouseListener, Change
         colorLabel.setIcon(new ImageIcon(colorImage));
         add(colorLabel);
     }
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		if(e.getSource() == saveButton) {
+			save = true;
+		}else if(e.getSource() == resetButton) {
+			reset = true;
+		}
+	}
 }
